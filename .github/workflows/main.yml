@@ -26,7 +26,7 @@ jobs:
       run: nuget restore PidginWinToastLib.sln
     
     - name: Build solution
-      run: msbuild PidginWinToastLib.sln -property:Configuration=Release|x86
+      run: msbuild PidginWinToastLib.sln -property:Configuration=Release -property:Platform=x86
     
     - uses: actions/upload-artifact@v2
       name: Upload artifacts

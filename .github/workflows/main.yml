@@ -39,12 +39,6 @@ jobs:
   build_plugin:
     name: Build plugin
     runs-on: windows-latest
-    strategy: 
-      matrix: 
-        include:
-          - msystem: MINGW32
-            msystem_lower: mingw32
-            arch: i686
     defaults:
       run:
         shell: msys2 {0}
@@ -59,4 +53,5 @@ jobs:
         uses: msys2/setup-msys2@v2
         with:
           update: true
+          msystem: MINGW32
           install: bash bzip2 ca-certificates coreutils gawk gnupg grep gzip libiconv make patch sed tar unzip wget zip

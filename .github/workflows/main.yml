@@ -1,0 +1,36 @@
+name: Build
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build_lib:
+    name: Build lib
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: lib
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1.0.1
+      
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.2
+ 
+    - name: Restore NuGet packages
+      run: nuget restore PidginWinToastLib.sln
+    
+    - name: Build solution
+      run: msbuild PidginWinToastLib.sln -property:Configuration=Release
+    
+    - uses: actions/upload-artifact@v2
+      name: Upload artifacts
+      with:
+        name: PidginWinToastLib
+        path: |
+          PidginWinToastLib\bin\x64\Release

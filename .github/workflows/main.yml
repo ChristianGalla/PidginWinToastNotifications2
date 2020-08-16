@@ -39,6 +39,12 @@ jobs:
   build_plugin:
     name: Build plugin
     runs-on: windows-latest
+    strategy: 
+      matrix: 
+        include:
+          - msystem: MINGW32
+            msystem_lower: mingw32
+            arch: i686
     defaults:
       run:
         shell: msys2 {0}

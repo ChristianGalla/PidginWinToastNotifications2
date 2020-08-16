@@ -33,4 +33,4 @@ jobs:
       with:
         name: PidginWinToastLib
         path: |
-          lib\x86\Release
+          lib\Release

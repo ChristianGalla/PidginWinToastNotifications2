@@ -26,11 +26,11 @@ jobs:
       run: nuget restore PidginWinToastLib.sln
     
     - name: Build solution
-      run: msbuild PidginWinToastLib.sln -property:Configuration=Release
+      run: msbuild PidginWinToastLib.sln -property:Configuration=Release|x86
     
     - uses: actions/upload-artifact@v2
       name: Upload artifacts
       with:
         name: PidginWinToastLib
         path: |
-          bin\x64\Release
+          lib\x86\Release

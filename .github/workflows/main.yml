@@ -55,3 +55,7 @@ jobs:
           update: true
           msystem: MINGW32
           install: bash bzip2 ca-certificates coreutils gawk gnupg grep gzip libiconv make patch sed tar unzip wget zip
+
+      - name: Checkout Pidgin 2.12.0
+        run: hg clone https://keep.imfreedom.org/pidgin/pidgin -r 0241f07ed2ba pidgin
+        shell: cmd

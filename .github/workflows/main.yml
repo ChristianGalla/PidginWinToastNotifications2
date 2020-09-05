@@ -58,8 +58,8 @@ jobs:
         shell: bash
       
       - name: Extracting GTK 
-        run: unzip -v gtk.zip -d win32-dev/gtk_2_0-2.14
-        shell: bash
+        run: 7z x gtk.zip -owin32-dev/gtk_2_0-2.14
+        shell: cmd
       
       - name: Delete GTK Zip
         run: rm gtk.zip

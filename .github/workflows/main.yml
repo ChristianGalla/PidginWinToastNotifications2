@@ -51,15 +51,19 @@ jobs:
 
       - name: Create win32-dev directory
         run: mkdir win32-dev
+        shell: cmd
       
       - name: Download GTK Zip
         run: curl -o gtk.zip https://ftp.gnome.org/pub/gnome/binaries/win32/gtk+/2.14/gtk+-bundle_2.14.7-20090119_win32.zip
+        shell: bash
       
       - name: Extracting GTK 
         run: unzip gtk.zip -d win32-dev/gtk_2_0-2.14
+        shell: bash
       
       - name: Delete GTK Zip
         run: rm gtk.zip
+        shell: cmd
         
       - name: Setup MSYS2
         uses: msys2/setup-msys2@v2

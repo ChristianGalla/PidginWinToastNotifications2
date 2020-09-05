@@ -49,32 +49,162 @@ jobs:
         with:
           path: PidginWinToastNotifications
 
+
       - name: Create win32-dev directory
         run: mkdir win32-dev
         shell: cmd
       
-      - name: Download GTK Zip
-        run: curl -L https://ftp.gnome.org/pub/gnome/binaries/win32/gtk+/2.14/gtk+-bundle_2.14.7-20090119_win32.zip --output gtk.zip
-        shell: bash
       
-      - name: Extracting GTK 
+      - name: Download GTK archive
+        run: curl -L https://ftp.gnome.org/pub/gnome/binaries/win32/gtk+/2.14/gtk+-bundle_2.14.7-20090119_win32.zip --output gtk.zip
+        shell: cmd
+      
+      - name: Extract GTK 
         run: 7z x gtk.zip -owin32-dev/gtk_2_0-2.14
         shell: cmd
       
-      - name: List output dir 
-        run: dir win32-dev
-        shell: cmd
-      
-      - name: Delete GTK Zip
+      - name: Delete GTK archive
         run: rm gtk.zip
         shell: cmd
-        
+      
+      
+      - name: Download gettext tools archive
+        run: curl -L https://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/gettext-tools-0.17.zip --output gettext-tools-0.17.zip
+        shell: cmd
+      
+      - name: Extract gettext tools
+        run: 7z x gettext-tools-0.17.zip -owin32-dev/gettext-0.17
+        shell: cmd
+      
+      - name: Delete gettext tools archive
+        run: rm gettext-tools-0.17.zip
+        shell: cmd
+      
+      
+      - name: Download gettext runtime
+        run: curl -L https://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/gettext-runtime-0.17-1.zip --output gettext-runtime-0.17-1.zip
+        shell: cmd
+      
+      - name: Extract gettext runtime
+        run: 7z x gettext-runtime-0.17-1.zip -owin32-dev/gettext-0.17
+        shell: cmd
+      
+      - name: Delete gettext tools runtime archive
+        run: rm gettext-runtime-0.17-1.zip
+        shell: cmd        
+            
+      
+      - name: Download GtkSpell
+        run: curl -L https://data.imfreedom.org/pidgin/win32/gtkspell-2.0.16.tar.bz2 --output gtkspell-2.0.16.tar.bz2
+        shell: cmd
+      
+      - name: Extract GtkSpell
+        run: 7z x gtkspell-2.0.16.tar.bz2 -owin32-dev
+        shell: cmd
+      
+      - name: Delete GtkSpell archive
+        run: rm gtkspell-2.0.16.tar.bz2
+        shell: cmd    
+            
+      
+      - name: Download Enchant
+        run: curl -L https://data.imfreedom.org/pidgin/win32/enchant_1.6.0_win32.zip --output enchant_1.6.0_win32.zip
+        shell: cmd
+      
+      - name: Extract Enchant
+        run: 7z x enchant_1.6.0_win32.zip -owin32-dev
+        shell: cmd
+      
+      - name: Delete Enchant archive
+        run: rm enchant_1.6.0_win32.zip
+        shell: cmd  
+            
+      
+      - name: Download Mozilla NSS
+        run: curl -L https://data.imfreedom.org/pidgin/win32/nss-3.24-nspr-4.12.tar.gz --output nss-3.24-nspr-4.12.tar.gz
+        shell: cmd
+      
+      - name: Extract Mozilla NSS
+        run: 7z x nss-3.24-nspr-4.12.tar.gz -owin32-dev
+        shell: cmd
+      
+      - name: Delete Mozilla NSS archive
+        run: rm nss-3.24-nspr-4.12.tar.gz
+        shell: cmd  
+      
+      
+      - name: Download SILC Toolkit
+        run: curl -L https://data.imfreedom.org/pidgin/win32/silc-toolkit-1.1.12.tar.gz --output silc-toolkit-1.1.12.tar.gz
+        shell: cmd
+      
+      - name: Extract SILC Toolkit
+        run: 7z x silc-toolkit-1.1.12.tar.gz -owin32-dev
+        shell: cmd
+      
+      - name: Delete SILC Toolkit archive
+        run: rm silc-toolkit-1.1.12.tar.gz
+        shell: cmd                       
+       
+      
+      - name: Download Meanwhile
+        run: curl -L https://data.imfreedom.org/pidgin/win32/meanwhile-1.0.2_daa3-win32.zip --output meanwhile-1.0.2_daa3-win32.zip
+        shell: cmd
+      
+      - name: Extract Meanwhile
+        run: 7z x meanwhile-1.0.2_daa3-win32.zip -owin32-dev
+        shell: cmd
+      
+      - name: Delete Meanwhile archive
+        run: rm meanwhile-1.0.2_daa3-win32.zip
+        shell: cmd  
+       
+      
+      - name: Download Cyrus SASL
+        run: curl -L https://data.imfreedom.org/pidgin/win32/cyrus-sasl-2.1.26_daa1.tar.gz --output cyrus-sasl-2.1.26_daa1.tar.gz
+        shell: cmd
+      
+      - name: Extract Cyrus SASL
+        run: 7z x cyrus-sasl-2.1.26_daa1.tar.gz -owin32-dev
+        shell: cmd
+      
+      - name: Delete Cyrus SASL archive
+        run: rm cyrus-sasl-2.1.26_daa1.tar.gz
+        shell: cmd  
+       
+      
+      - name: Download Intltool
+        run: curl -L https://ftp.acc.umu.se/pub/GNOME/binaries/win32/intltool/0.40/intltool_0.40.4-1_win32.zip --output intltool_0.40.4-1_win32.zip
+        shell: cmd
+      
+      - name: Extract Intltool
+        run: 7z x intltool_0.40.4-1_win32.zip -owin32-dev/intltool_0.40.4-1_win32
+        shell: cmd
+      
+      - name: Delete Intltool archive
+        run: rm intltool_0.40.4-1_win32.zip
+        shell: cmd  
+       
+      
+      - name: Download Crash Reporting Library
+        run: curl -L https://data.imfreedom.org/pidgin/win32/pidgin-inst-deps-20130214.tar.gz --output pidgin-inst-deps-20130214.tar.gz
+        shell: cmd
+      
+      - name: Extract Crash Reporting Library
+        run: 7z x pidgin-inst-deps-20130214.tar.gz -owin32-dev
+        shell: cmd
+      
+      - name: Delete Crash Reporting Library archive
+        run: rm pidgin-inst-deps-20130214.tar.gz
+        shell: cmd                    
+      
+      
       - name: Setup MSYS2
         uses: msys2/setup-msys2@v2
         with:
           update: true
           msystem: MINGW32
           install: bash bzip2 ca-certificates coreutils gawk gnupg grep gzip libiconv make patch sed tar unzip wget zip
+      
       
       - name: Checkout Pidgin 2.12.0
         run: hg clone https://keep.imfreedom.org/pidgin/pidgin -r 0241f07ed2ba -b release-2.x.y -u v2.12.0 pidgin-2.x.y

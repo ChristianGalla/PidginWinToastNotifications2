@@ -57,8 +57,8 @@ jobs:
         run: curl https://ftp.gnome.org/pub/gnome/binaries/win32/gtk+/2.14/gtk+-bundle_2.14.7-20090119_win32.zip --output gtk.zip
         shell: bash
       
-      - name: Current folder content
-        run: dir
+      - name: Print zip file content
+        run: type gtk.zip
         shell: cmd
       
       - name: Extracting GTK 

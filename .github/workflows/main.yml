@@ -54,7 +54,7 @@ jobs:
         shell: cmd
       
       - name: Download GTK Zip
-        run: curl -iL https://ftp.gnome.org/pub/gnome/binaries/win32/gtk+/2.14/gtk+-bundle_2.14.7-20090119_win32.zip --output gtk.zip
+        run: curl -L https://ftp.gnome.org/pub/gnome/binaries/win32/gtk+/2.14/gtk+-bundle_2.14.7-20090119_win32.zip --output gtk.zip
         shell: bash
       
       - name: Extracting GTK 

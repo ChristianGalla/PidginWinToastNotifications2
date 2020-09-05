@@ -49,12 +49,25 @@ jobs:
         with:
           path: PidginWinToastNotifications
 
+      - name: Create win32-dev directory
+        run: mkdir win32-dev
+      
+      - name: Download GTK Zip
+        run: curl -o gtk.zip https://ftp.gnome.org/pub/gnome/binaries/win32/gtk+/2.14/gtk+-bundle_2.14.7-20090119_win32.zip
+      
+      - name: Extracting GTK 
+        run: unzip gtk.zip -d win32-dev/gtk_2_0-2.14
+      
+      - name: Delete GTK Zip
+        run: rm gtk.zip
+        
       - name: Setup MSYS2
         uses: msys2/setup-msys2@v2
         with:
           update: true
           msystem: MINGW32
           install: bash bzip2 ca-certificates coreutils gawk gnupg grep gzip libiconv make patch sed tar unzip wget zip
-
+      
       - name: Checkout Pidgin 2.12.0
-        run: hg clone https://keep.imfreedom.org/pidgin/pidgin -r 0241f07ed2ba -b release-2.x.y -u v2.12.0 pidgin
+        run: hg clone https://keep.imfreedom.org/pidgin/pidgin -r 0241f07ed2ba -b release-2.x.y -u v2.12.0 pidgin-2.x.y
+        shell: cmd

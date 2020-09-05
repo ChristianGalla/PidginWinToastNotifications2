@@ -58,8 +58,8 @@ jobs:
         shell: bash
       
       - name: Current folder content
-        run: ll
-        shell: bash
+        run: dir
+        shell: cmd
       
       - name: Extracting GTK 
         run: unzip gtk.zip -d win32-dev/gtk_2_0-2.14

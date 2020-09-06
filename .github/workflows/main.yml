@@ -69,11 +69,13 @@ jobs:
       
       - name: Extract binutils 
         # it looks like tar for windows doesn't support xz, so use 7z instead
-        run: 7z x ebinutils-2.24-1-mingw32-bin.tar.xz | tar -xf -C win32-dev/mingw-4.7.2
+        run: 7z x binutils-2.24-1-mingw32-bin.tar.xz -obinutils-2.24-1-mingw32-bin.tar |
+          tar -xf -C win32-dev/mingw-4.7.2
         shell: cmd
       
       - name: Delete binutils archive
-        run: rm binutils-2.24-1-mingw32-bin.tar.xz
+        run: rm binutils-2.24-1-mingw32-bin.tar.xz |
+          rm binutils-2.24-1-mingw32-bin.tar
         shell: cmd
             
       

@@ -64,20 +64,26 @@ jobs:
       
       - name: Download binutils
         # binutils-2.23.1-1-mingw32-bin.tar.lzma is not available anymore. Download the nearest version.
-        run: curl -L curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/binutils/binutils-2.24/binutils-2.24-1-mingw32-bin.tar.xz/download --output binutils-2.24-1-mingw32-bin.tar.xz
+        run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/binutils/binutils-2.24/binutils-2.24-1-mingw32-bin.tar.xz/download --output binutils-2.24-1-mingw32-bin.tar.xz
         shell: cmd
       
-      - name: Extract binutils 
+      - name: Extract binutils 1
         # it looks like tar for windows doesn't support xz, so use 7z instead
-        run: 7z x binutils-2.24-1-mingw32-bin.tar.xz -obinutils-2.24-1-mingw32-bin.tar |
-          tar -xf -C win32-dev/mingw-4.7.2
-        shell: cmd
-      
-      - name: Delete binutils archive
-        run: rm binutils-2.24-1-mingw32-bin.tar.xz |
-          rm binutils-2.24-1-mingw32-bin.tar
+        run: 7z x binutils-2.24-1-mingw32-bin.tar.xz -obinutils-2.24-1-mingw32-bin.tar
         shell: cmd
             
+      - name: Extract binutils 2
+        run: tar -xf binutils-2.24-1-mingw32-bin.tar -C win32-dev/mingw-4.7.2
+        shell: cmd
+        
+      - name: Delete binutils archive 1
+        run: rm binutils-2.24-1-mingw32-bin.tar.xz
+        shell: cmd
+            
+      - name: Delete binutils archive 2
+        run: rm binutils-2.24-1-mingw32-bin.tar
+        shell: cmd
+      
       
       - name: List win32-dev/mingw-4.7.2 dir
         run: dir win32-dev/mingw-4.7.2

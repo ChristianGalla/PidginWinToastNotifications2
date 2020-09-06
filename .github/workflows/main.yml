@@ -68,7 +68,7 @@ jobs:
         shell: cmd
       
       - name: Extract binutils 1
-        # it looks like tar for windows doesn't support xz, so use 7z instead
+        # it looks like tar for Windows doesn't support xz, so use 7z instead
         run: 7z x binutils-2.24-1-mingw32-bin.tar.xz -obinutils-2.24-1-mingw32-bin
         shell: cmd
             

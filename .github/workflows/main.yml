@@ -60,7 +60,7 @@ jobs:
         shell: cmd
       
       - name: Create mingw directory
-        run: mkdir win32-dev/mingw-4.7.2
+        run: mkdir win32-dev\mingw-4.7.2
         shell: cmd
       
       # Install Comnpiler dependencies

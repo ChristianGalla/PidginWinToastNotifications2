@@ -89,7 +89,7 @@ jobs:
       
       
       - name: List win32-dev/mingw-4.7.2 dir
-        run: dir win32-dev/mingw-4.7.2
+        run: dir win32-dev\mingw-4.7.2
         shell: cmd        
       
       # Installing Build dependencies

@@ -44,16 +44,42 @@ jobs:
         shell: msys2 {0}
     
     steps:
+      
+      # Checkout Plugin
+      
       - name: Checkout PidginWinToastNotifications
         uses: actions/checkout@v2
         with:
           path: PidginWinToastNotifications
 
 
+      # Prepare directory
+
       - name: Create win32-dev directory
         run: mkdir win32-dev
         shell: cmd
       
+      
+      # Install Comnpiler dependencies
+      
+      - name: Download binutils
+        run: curl -L http://sourceforge.net/projects/mingw/files/MinGW/Base/binutils/binutils-2.23.1/binutils-2.23.1-1-mingw32-bin.tar.lzma/download --output binutils-2.23.1-1-mingw32-bin.tar.lzma
+        shell: cmd
+      
+      - name: Extract binutils 
+        run: tar -xf binutils-2.23.1-1-mingw32-bin.tar.lzma -C win32-dev/mingw-4.7.2
+        shell: cmd
+      
+      - name: Delete binutils archive
+        run: rm binutils-2.23.1-1-mingw32-bin.tar.lzma
+        shell: cmd
+            
+      
+      - name: List win32-dev/mingw-4.7.2 dir
+        run: dir win32-dev/mingw-4.7.2
+        shell: cmd        
+      
+      # Installing Build dependencies
       
       - name: Download GTK archive
         run: curl -L https://ftp.gnome.org/pub/gnome/binaries/win32/gtk+/2.14/gtk+-bundle_2.14.7-20090119_win32.zip --output gtk.zip
@@ -195,13 +221,15 @@ jobs:
       
       - name: Delete Crash Reporting Library archive
         run: rm pidgin-inst-deps-20130214.tar.gz
-        shell: cmd                    
+        shell: cmd
       
       
       - name: List win32-dev dir
         run: dir win32-dev
         shell: cmd                    
       
+      
+      # Setup MSYS2
       
       - name: Setup MSYS2
         uses: msys2/setup-msys2@v2
@@ -211,10 +239,14 @@ jobs:
           install: bash bzip2 ca-certificates coreutils gawk gnupg grep gzip libiconv make patch sed tar unzip wget zip
       
       
+      # Get Pidgin source code
+      
       - name: Checkout Pidgin 2.12.0
         run: hg clone https://keep.imfreedom.org/pidgin/pidgin -r 0241f07ed2ba -b release-2.x.y -u v2.12.0 pidgin-2.x.y
         shell: cmd
         
+        
+      # Build Pidgin
         
       - name: Build Pidgin
         run: make -f Makefile.mingw install

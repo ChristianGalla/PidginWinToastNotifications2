@@ -69,19 +69,19 @@ jobs:
       
       - name: Extract binutils 1
         # it looks like tar for windows doesn't support xz, so use 7z instead
-        run: 7z x binutils-2.24-1-mingw32-bin.tar.xz -obinutils-2.24-1-mingw32-bin.tar
+        run: 7z x binutils-2.24-1-mingw32-bin.tar.xz -obinutils-2.24-1-mingw32-bin
         shell: cmd
             
       - name: Extract binutils 2
-        run: tar -xf binutils-2.24-1-mingw32-bin.tar -C win32-dev/mingw-4.7.2
+        run: tar -xf binutils-2.24-1-mingw32-bin/binutils-2.24-1-mingw32-bin.tar -C win32-dev/mingw-4.7.2
         shell: cmd
         
       - name: Delete binutils archive 1
-        run: rm binutils-2.24-1-mingw32-bin.tar.xz
+        run: del binutils-2.24-1-mingw32-bin.tar.xz
         shell: cmd
             
       - name: Delete binutils archive 2
-        run: rm binutils-2.24-1-mingw32-bin.tar
+        run: rmdir /Q /S binutils-2.24-1-mingw32-bin
         shell: cmd
       
       
@@ -100,7 +100,7 @@ jobs:
         shell: cmd
       
       - name: Delete GTK archive
-        run: rm gtk.zip
+        run: del gtk.zip
         shell: cmd
       
       
@@ -113,7 +113,7 @@ jobs:
         shell: cmd
       
       - name: Delete gettext tools archive
-        run: rm gettext-tools-0.17.zip
+        run: del gettext-tools-0.17.zip
         shell: cmd
       
       
@@ -126,7 +126,7 @@ jobs:
         shell: cmd
       
       - name: Delete gettext tools runtime archive
-        run: rm gettext-runtime-0.17-1.zip
+        run: del gettext-runtime-0.17-1.zip
         shell: cmd        
             
       
@@ -139,7 +139,7 @@ jobs:
         shell: cmd
       
       - name: Delete GtkSpell archive
-        run: rm gtkspell-2.0.16.tar.bz2
+        run: del gtkspell-2.0.16.tar.bz2
         shell: cmd    
             
       
@@ -152,7 +152,7 @@ jobs:
         shell: cmd
       
       - name: Delete Enchant archive
-        run: rm enchant_1.6.0_win32.zip
+        run: del enchant_1.6.0_win32.zip
         shell: cmd  
             
       
@@ -165,7 +165,7 @@ jobs:
         shell: cmd
       
       - name: Delete Mozilla NSS archive
-        run: rm nss-3.24-nspr-4.12.tar.gz
+        run: del nss-3.24-nspr-4.12.tar.gz
         shell: cmd  
       
       
@@ -178,7 +178,7 @@ jobs:
         shell: cmd
       
       - name: Delete SILC Toolkit archive
-        run: rm silc-toolkit-1.1.12.tar.gz
+        run: del silc-toolkit-1.1.12.tar.gz
         shell: cmd                       
        
       
@@ -191,7 +191,7 @@ jobs:
         shell: cmd
       
       - name: Delete Meanwhile archive
-        run: rm meanwhile-1.0.2_daa3-win32.zip
+        run: del meanwhile-1.0.2_daa3-win32.zip
         shell: cmd  
        
       
@@ -204,7 +204,7 @@ jobs:
         shell: cmd
       
       - name: Delete Cyrus SASL archive
-        run: rm cyrus-sasl-2.1.26_daa1.tar.gz
+        run: del cyrus-sasl-2.1.26_daa1.tar.gz
         shell: cmd  
        
       
@@ -217,7 +217,7 @@ jobs:
         shell: cmd
       
       - name: Delete Intltool archive
-        run: rm intltool_0.40.4-1_win32.zip
+        run: del intltool_0.40.4-1_win32.zip
         shell: cmd  
        
       
@@ -230,7 +230,7 @@ jobs:
         shell: cmd
       
       - name: Delete Crash Reporting Library archive
-        run: rm pidgin-inst-deps-20130214.tar.gz
+        run: del pidgin-inst-deps-20130214.tar.gz
         shell: cmd
       
       

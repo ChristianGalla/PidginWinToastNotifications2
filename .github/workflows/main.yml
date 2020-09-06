@@ -53,12 +53,15 @@ jobs:
           path: PidginWinToastNotifications
 
 
-      # Prepare directory
+      # Prepare directories
 
       - name: Create win32-dev directory
         run: mkdir win32-dev
         shell: cmd
       
+      - name: Create mingw directory
+        run: mkdir win32-dev/mingw-4.7.2
+        shell: cmd
       
       # Install Comnpiler dependencies
       

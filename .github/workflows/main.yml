@@ -67,7 +67,7 @@ jobs:
         shell: cmd
       
       - name: Extract binutils 
-        run: tar -xf binutils-2.23.1-1-mingw32-bin.tar.lzma -C win32-dev/mingw-4.7.2
+        run: tar --lzma -xf binutils-2.23.1-1-mingw32-bin.tar.lzma -C win32-dev/mingw-4.7.2
         shell: cmd
       
       - name: Delete binutils archive

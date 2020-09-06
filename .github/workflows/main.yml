@@ -86,7 +86,267 @@ jobs:
       - name: Delete binutils archive 2
         run: rmdir /Q /S binutils-2.24-1-mingw32-bin
         shell: cmd
+        
+        
+      - name: Download gcc-core
+        run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/gcc/Version4/gcc-4.7.2-1/gcc-core-4.7.2-1-mingw32-bin.tar.lzma/download --output gcc-core-4.7.2-1-mingw32-bin.tar.lzma
+        shell: cmd
       
+      - name: Extract gcc-core
+        run: tar --lzma -xf gcc-core-4.7.2-1-mingw32-bin.tar.lzma -C win32-dev
+        shell: cmd
+        
+      - name: Delete gcc-core archive
+        run: del gcc-core-4.7.2-1-mingw32-bin.tar.lzma
+        shell: cmd    
+      
+        
+      - name: Download gcc source
+        run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/gcc/Version4/gcc-4.7.2-1/gcc-4.7.2-1-mingw32-src.tar.lzma/download --output gcc-4.7.2-1-mingw32-src.tar.lzma
+        shell: cmd
+      
+      - name: Extract gcc source
+        run: tar --lzma -xf gcc-4.7.2-1-mingw32-src.tar.lzma -C win32-dev
+        shell: cmd
+        
+      - name: Delete gcc source archive
+        run: del gcc-4.7.2-1-mingw32-src.tar.lzma
+        shell: cmd    
+      
+        
+      - name: Download libgcc
+        run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/gcc/Version4/gcc-4.7.2-1/libgcc-4.7.2-1-mingw32-dll-1.tar.lzma/download --output libgcc-4.7.2-1-mingw32-dll-1.tar.lzma
+        shell: cmd
+      
+      - name: Extract libgcc
+        run: tar --lzma -xf libgcc-4.7.2-1-mingw32-dll-1.tar.lzma -C win32-dev
+        shell: cmd
+        
+      - name: Delete libgcc archive
+        run: del libgcc-4.7.2-1-mingw32-dll-1.tar.lzma
+        shell: cmd
+        
+        
+      - name: Download libgomp
+        run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/gcc/Version4/gcc-4.7.2-1/libgomp-4.7.2-1-mingw32-dll-1.tar.lzma/download --output libgomp-4.7.2-1-mingw32-dll-1.tar.lzma
+        shell: cmd
+      
+      - name: Extract libgomp
+        run: tar --lzma -xf libgomp-4.7.2-1-mingw32-dll-1.tar.lzma -C win32-dev
+        shell: cmd
+        
+      - name: Delete libgomp archive
+        run: del libgomp-4.7.2-1-mingw32-dll-1.tar.lzma
+        shell: cmd
+        
+        
+      - name: Download libquadmath
+        run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/gcc/Version4/gcc-4.7.2-1/libquadmath-4.7.2-1-mingw32-dll-0.tar.lzma/download --output libquadmath-4.7.2-1-mingw32-dll-0.tar.lzma
+        shell: cmd
+      
+      - name: Extract libquadmath
+        run: tar --lzma -xf libquadmath-4.7.2-1-mingw32-dll-0.tar.lzma -C win32-dev
+        shell: cmd
+        
+      - name: Delete libquadmath archive
+        run: del libquadmath-4.7.2-1-mingw32-dll-0.tar.lzma
+        shell: cmd
+        
+        
+      - name: Download libssp
+        run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/gcc/Version4/gcc-4.7.2-1/libssp-4.7.2-1-mingw32-dll-0.tar.lzma/download --output libssp-4.7.2-1-mingw32-dll-0.tar.lzma
+        shell: cmd
+      
+      - name: Extract libssp
+        run: tar --lzma -xf libssp-4.7.2-1-mingw32-dll-0.tar.lzma -C win32-dev
+        shell: cmd
+        
+      - name: Delete libssp archive
+        run: del libssp-4.7.2-1-mingw32-dll-0.tar.lzma
+        shell: cmd
+      
+        
+      - name: Download gettext
+        run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/gettext/gettext-0.18.1.1-2/libintl-0.18.1.1-2-mingw32-dll-8.tar.lzma/download --output libintl-0.18.1.1-2-mingw32-dll-8.tar.lzma
+        shell: cmd
+      
+      - name: Extract gettext
+        run: tar --lzma -xf libintl-0.18.1.1-2-mingw32-dll-8.tar.lzma -C win32-dev
+        shell: cmd
+        
+      - name: Delete gettext archive
+        run: del libintl-0.18.1.1-2-mingw32-dll-8.tar.lzma
+        shell: cmd
+        
+        
+      - name: Download gmp
+        run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/gmp/gmp-5.0.1-1/gmp-5.0.1-1-mingw32-dev.tar.lzma/download --output gmp-5.0.1-1-mingw32-dev.tar.lzma
+        shell: cmd
+      
+      - name: Extract gmp
+        run: tar --lzma -xf gmp-5.0.1-1-mingw32-dev.tar.lzma -C win32-dev
+        shell: cmd
+        
+      - name: Delete gmp archive
+        run: del gmp-5.0.1-1-mingw32-dev.tar.lzma
+        shell: cmd
+        
+        
+      - name: Download libgmp
+        run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/gmp/gmp-5.0.1-1/libgmp-5.0.1-1-mingw32-dll-10.tar.lzma/download --output glibgmp-5.0.1-1-mingw32-dll-10.tar.lzma
+        shell: cmd
+      
+      - name: Extract libgmp
+        run: tar --lzma -xf libgmp-5.0.1-1-mingw32-dll-10.tar.lzma -C win32-dev
+        shell: cmd
+        
+      - name: Delete libgmp archive
+        run: del libgmp-5.0.1-1-mingw32-dll-10.tar.lzma
+        shell: cmd
+        
+        
+      - name: Download libiconv dev
+        run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/libiconv/libiconv-1.14-2/libiconv-1.14-2-mingw32-dev.tar.lzma/download --output libiconv-1.14-2-mingw32-dev.tar.lzma
+        shell: cmd
+      
+      - name: Extract libiconv dev
+        run: tar --lzma -xf libiconv-1.14-2-mingw32-dev.tar.lzma -C win32-dev
+        shell: cmd
+        
+      - name: Delete libiconv dev archive
+        run: del libiconv-1.14-2-mingw32-dev.tar.lzma
+        shell: cmd
+        
+        
+      - name: Download libiconv dll
+        run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/libiconv/libiconv-1.14-2/libiconv-1.14-2-mingw32-dll-2.tar.lzma/download --output libiconv-1.14-2-mingw32-dll-2.tar.lzma
+        shell: cmd
+      
+      - name: Extract libiconv dll
+        run: tar --lzma -xf libiconv-1.14-2-mingw32-dll-2.tar.lzma -C win32-dev
+        shell: cmd
+        
+      - name: Delete libiconv dll archive
+        run: del libiconv-1.14-2-mingw32-dll-2.tar.lzma
+        shell: cmd
+        
+        
+      - name: Download mingwrt dev
+        run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/mingwrt/mingwrt-3.20/mingwrt-3.20-2-mingw32-dev.tar.lzma/download --output mingwrt-3.20-2-mingw32-dev.tar.lzma
+        shell: cmd
+      
+      - name: Extract mingwrt dev
+        run: tar --lzma -xf mingwrt-3.20-2-mingw32-dev.tar.lzma -C win32-dev
+        shell: cmd
+        
+      - name: Delete mingwrt dev archive
+        run: del mingwrt-3.20-2-mingw32-dev.tar.lzma
+        shell: cmd
+        
+        
+      - name: Download mingwrt dll
+        run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/mingwrt/mingwrt-3.20/mingwrt-3.20-2-mingw32-dll.tar.lzma/download --output mingwrt-3.20-2-mingw32-dll.tar.lzma
+        shell: cmd
+      
+      - name: Extract mingwrt dll
+        run: tar --lzma -xf mingwrt-3.20-2-mingw32-dll.tar.lzma -C win32-dev
+        shell: cmd
+        
+      - name: Delete mingwrt dll archive
+        run: del mingwrt-3.20-2-mingw32-dll.tar.lzma
+        shell: cmd
+        
+        
+      - name: Download mpc dll
+        run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/mpc/mpc-0.8.1-1/libmpc-0.8.1-1-mingw32-dll-2.tar.lzma/download --output libmpc-0.8.1-1-mingw32-dll-2.tar.lzma
+        shell: cmd
+      
+      - name: Extract mpc dll
+        run: tar --lzma -xf libmpc-0.8.1-1-mingw32-dll-2.tar.lzma -C win32-dev
+        shell: cmd
+        
+      - name: Delete mpc dll archive
+        run: del libmpc-0.8.1-1-mingw32-dll-2.tar.lzma
+        shell: cmd
+        
+        
+      - name: Download mpc dev
+        run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/mpc/mpc-0.8.1-1/mpc-0.8.1-1-mingw32-dev.tar.lzma/download --output mpc-0.8.1-1-mingw32-dev.tar.lzma
+        shell: cmd
+      
+      - name: Extract mpc dev
+        run: tar --lzma -xf mpc-0.8.1-1-mingw32-dev.tar.lzma -C win32-dev
+        shell: cmd
+        
+      - name: Delete mpc dev archive
+        run: del mpc-0.8.1-1-mingw32-dev.tar.lzma
+        shell: cmd
+        
+        
+      - name: Download mpfr dll
+        run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/mpfr/mpfr-2.4.1-1/libmpfr-2.4.1-1-mingw32-dll-1.tar.lzma/download --output libmpfr-2.4.1-1-mingw32-dll-1.tar.lzma
+        shell: cmd
+      
+      - name: Extract mpfr dll
+        run: tar --lzma -xf libmpfr-2.4.1-1-mingw32-dll-1.tar.lzma -C win32-dev
+        shell: cmd
+        
+      - name: Delete mpfr dll archive
+        run: del libmpfr-2.4.1-1-mingw32-dll-1.tar.lzma
+        shell: cmd
+        
+        
+      - name: Download mpfr dev
+        run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/mpfr/mpfr-2.4.1-1/mpfr-2.4.1-1-mingw32-dev.tar.lzma/download --output mpfr-2.4.1-1-mingw32-dev.tar.lzma
+        shell: cmd
+      
+      - name: Extract mpfr dev
+        run: tar --lzma -xf mpfr-2.4.1-1-mingw32-dev.tar.lzma -C win32-dev
+        shell: cmd
+        
+      - name: Delete mpfr dev archive
+        run: del mpfr-2.4.1-1-mingw32-dev.tar.lzma
+        shell: cmd
+        
+        
+      - name: Download w32api
+        run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/w32api/w32api-3.17/w32api-3.17-2-mingw32-dev.tar.lzma/download --output w32api-3.17-2-mingw32-dev.tar.lzma
+        shell: cmd
+      
+      - name: Extract w32api
+        run: tar --lzma -xf w32api-3.17-2-mingw32-dev.tar.lzma -C win32-dev
+        shell: cmd
+        
+      - name: Delete w32api archive
+        run: del w32api-3.17-2-mingw32-dev.tar.lzma
+        shell: cmd
+        
+        
+      - name: Download libpthreadgc dll
+        run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/pthreads-w32/pthreads-w32-2.9.0-pre-20110507-2/libpthreadgc-2.9.0-mingw32-pre-20110507-2-dll-2.tar.lzma/download --output libpthreadgc-2.9.0-mingw32-pre-20110507-2-dll-2.tar.lzma
+        shell: cmd
+      
+      - name: Extract libpthreadgc dll
+        run: tar --lzma -xf libpthreadgc-2.9.0-mingw32-pre-20110507-2-dll-2.tar.lzma -C win32-dev
+        shell: cmd
+        
+      - name: Delete libpthreadgc dll archive
+        run: del libpthreadgc-2.9.0-mingw32-pre-20110507-2-dll-2.tar.lzma
+        shell: cmd
+        
+        
+      - name: Download pthreads dev
+        run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/pthreads-w32/pthreads-w32-2.9.0-pre-20110507-2/pthreads-w32-2.9.0-mingw32-pre-20110507-2-dev.tar.lzma/download --output pthreads-w32-2.9.0-mingw32-pre-20110507-2-dev.tar.lzma
+        shell: cmd
+      
+      - name: Extract pthreads dev
+        run: tar --lzma -xf pthreads-w32-2.9.0-mingw32-pre-20110507-2-dev.tar.lzma -C win32-dev
+        shell: cmd
+        
+      - name: Delete pthreads dev archive
+        run: del pthreads-w32-2.9.0-mingw32-pre-20110507-2-dev.tar.lzma
+        shell: cmd
+        
       
       - name: List win32-dev/mingw-4.7.2 dir
         run: dir win32-dev\mingw-4.7.2

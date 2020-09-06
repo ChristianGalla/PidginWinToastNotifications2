@@ -70,21 +70,13 @@ jobs:
         run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/binutils/binutils-2.24/binutils-2.24-1-mingw32-bin.tar.xz/download --output binutils-2.24-1-mingw32-bin.tar.xz
         shell: cmd
       
-      - name: Extract binutils 1
+      - name: Extract binutils
         # it looks like tar for Windows doesn't support xz, so use 7z instead
-        run: 7z x binutils-2.24-1-mingw32-bin.tar.xz -obinutils-2.24-1-mingw32-bin
-        shell: cmd
-            
-      - name: Extract binutils 2
-        run: tar -xf binutils-2.24-1-mingw32-bin/binutils-2.24-1-mingw32-bin.tar -C win32-dev/mingw-4.7.2
+        run: 7z x binutils-2.24-1-mingw32-bin.tar.xz -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
-      - name: Delete binutils archive 1
+      - name: Delete binutils archive
         run: del binutils-2.24-1-mingw32-bin.tar.xz
-        shell: cmd
-            
-      - name: Delete binutils archive 2
-        run: rmdir /Q /S binutils-2.24-1-mingw32-bin
         shell: cmd
         
         
@@ -93,7 +85,7 @@ jobs:
         shell: cmd
       
       - name: Extract gcc-core
-        run: tar --lzma -xf gcc-core-4.7.2-1-mingw32-bin.tar.lzma -C win32-dev
+        run: 7z x gcc-core-4.7.2-1-mingw32-bin.tar.lzma -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
       - name: Delete gcc-core archive
@@ -106,7 +98,7 @@ jobs:
         shell: cmd
       
       - name: Extract gcc source
-        run: tar --lzma -xf gcc-4.7.2-1-mingw32-src.tar.lzma -C win32-dev
+        run: 7z x gcc-4.7.2-1-mingw32-src.tar.lzma -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
       - name: Delete gcc source archive
@@ -119,7 +111,7 @@ jobs:
         shell: cmd
       
       - name: Extract libgcc
-        run: tar --lzma -xf libgcc-4.7.2-1-mingw32-dll-1.tar.lzma -C win32-dev
+        run: 7z x libgcc-4.7.2-1-mingw32-dll-1.tar.lzma -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
       - name: Delete libgcc archive
@@ -132,7 +124,7 @@ jobs:
         shell: cmd
       
       - name: Extract libgomp
-        run: tar --lzma -xf libgomp-4.7.2-1-mingw32-dll-1.tar.lzma -C win32-dev
+        run: 7z x libgomp-4.7.2-1-mingw32-dll-1.tar.lzma -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
       - name: Delete libgomp archive
@@ -145,7 +137,7 @@ jobs:
         shell: cmd
       
       - name: Extract libquadmath
-        run: tar --lzma -xf libquadmath-4.7.2-1-mingw32-dll-0.tar.lzma -C win32-dev
+        run: 7z x libquadmath-4.7.2-1-mingw32-dll-0.tar.lzma -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
       - name: Delete libquadmath archive
@@ -158,7 +150,7 @@ jobs:
         shell: cmd
       
       - name: Extract libssp
-        run: tar --lzma -xf libssp-4.7.2-1-mingw32-dll-0.tar.lzma -C win32-dev
+        run: 7z x libssp-4.7.2-1-mingw32-dll-0.tar.lzma -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
       - name: Delete libssp archive
@@ -171,7 +163,7 @@ jobs:
         shell: cmd
       
       - name: Extract gettext
-        run: tar --lzma -xf libintl-0.18.1.1-2-mingw32-dll-8.tar.lzma -C win32-dev
+        run: 7z x libintl-0.18.1.1-2-mingw32-dll-8.tar.lzma -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
       - name: Delete gettext archive
@@ -184,7 +176,7 @@ jobs:
         shell: cmd
       
       - name: Extract gmp
-        run: tar --lzma -xf gmp-5.0.1-1-mingw32-dev.tar.lzma -C win32-dev
+        run: 7z x gmp-5.0.1-1-mingw32-dev.tar.lzma -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
       - name: Delete gmp archive
@@ -197,7 +189,7 @@ jobs:
         shell: cmd
       
       - name: Extract libgmp
-        run: tar --lzma -xf libgmp-5.0.1-1-mingw32-dll-10.tar.lzma -C win32-dev
+        run: 7z x libgmp-5.0.1-1-mingw32-dll-10.tar.lzma -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
       - name: Delete libgmp archive
@@ -210,7 +202,7 @@ jobs:
         shell: cmd
       
       - name: Extract libiconv dev
-        run: tar --lzma -xf libiconv-1.14-2-mingw32-dev.tar.lzma -C win32-dev
+        run: 7z x libiconv-1.14-2-mingw32-dev.tar.lzma -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
       - name: Delete libiconv dev archive
@@ -223,7 +215,7 @@ jobs:
         shell: cmd
       
       - name: Extract libiconv dll
-        run: tar --lzma -xf libiconv-1.14-2-mingw32-dll-2.tar.lzma -C win32-dev
+        run: 7z x libiconv-1.14-2-mingw32-dll-2.tar.lzma -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
       - name: Delete libiconv dll archive
@@ -236,7 +228,7 @@ jobs:
         shell: cmd
       
       - name: Extract mingwrt dev
-        run: tar --lzma -xf mingwrt-3.20-2-mingw32-dev.tar.lzma -C win32-dev
+        run: 7z x mingwrt-3.20-2-mingw32-dev.tar.lzma -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
       - name: Delete mingwrt dev archive
@@ -249,7 +241,7 @@ jobs:
         shell: cmd
       
       - name: Extract mingwrt dll
-        run: tar --lzma -xf mingwrt-3.20-2-mingw32-dll.tar.lzma -C win32-dev
+        run: 7z x mingwrt-3.20-2-mingw32-dll.tar.lzma -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
       - name: Delete mingwrt dll archive
@@ -262,7 +254,7 @@ jobs:
         shell: cmd
       
       - name: Extract mpc dll
-        run: tar --lzma -xf libmpc-0.8.1-1-mingw32-dll-2.tar.lzma -C win32-dev
+        run: 7z x libmpc-0.8.1-1-mingw32-dll-2.tar.lzma -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
       - name: Delete mpc dll archive
@@ -275,7 +267,7 @@ jobs:
         shell: cmd
       
       - name: Extract mpc dev
-        run: tar --lzma -xf mpc-0.8.1-1-mingw32-dev.tar.lzma -C win32-dev
+        run: 7z x mpc-0.8.1-1-mingw32-dev.tar.lzma -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
       - name: Delete mpc dev archive
@@ -288,7 +280,7 @@ jobs:
         shell: cmd
       
       - name: Extract mpfr dll
-        run: tar --lzma -xf libmpfr-2.4.1-1-mingw32-dll-1.tar.lzma -C win32-dev
+        run: 7z x libmpfr-2.4.1-1-mingw32-dll-1.tar.lzma -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
       - name: Delete mpfr dll archive
@@ -301,7 +293,7 @@ jobs:
         shell: cmd
       
       - name: Extract mpfr dev
-        run: tar --lzma -xf mpfr-2.4.1-1-mingw32-dev.tar.lzma -C win32-dev
+        run: 7z x mpfr-2.4.1-1-mingw32-dev.tar.lzma -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
       - name: Delete mpfr dev archive
@@ -314,7 +306,7 @@ jobs:
         shell: cmd
       
       - name: Extract w32api
-        run: tar --lzma -xf w32api-3.17-2-mingw32-dev.tar.lzma -C win32-dev
+        run: 7z x w32api-3.17-2-mingw32-dev.tar.lzma -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
       - name: Delete w32api archive
@@ -327,7 +319,7 @@ jobs:
         shell: cmd
       
       - name: Extract libpthreadgc dll
-        run: tar --lzma -xf libpthreadgc-2.9.0-mingw32-pre-20110507-2-dll-2.tar.lzma -C win32-dev
+        run: 7z x libpthreadgc-2.9.0-mingw32-pre-20110507-2-dll-2.tar.lzma -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
       - name: Delete libpthreadgc dll archive
@@ -340,7 +332,7 @@ jobs:
         shell: cmd
       
       - name: Extract pthreads dev
-        run: tar --lzma -xf pthreads-w32-2.9.0-mingw32-pre-20110507-2-dev.tar.lzma -C win32-dev
+        run: 7z x pthreads-w32-2.9.0-mingw32-pre-20110507-2-dev.tar.lzma -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
       - name: Delete pthreads dev archive

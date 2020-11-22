@@ -18,10 +18,10 @@ jobs:
       uses: actions/checkout@v2
     
     - name: Setup MSBuild
-      uses: microsoft/setup-msbuild@v1.0.1
+      uses: microsoft/setup-msbuild@v1
       
     - name: Setup NuGet
-      uses: NuGet/setup-nuget@v1.0.2
+      uses: NuGet/setup-nuget@v1
  
     - name: Restore NuGet packages
       run: nuget restore PidginWinToastLib.sln
@@ -189,11 +189,11 @@ jobs:
         shell: cmd
       
       - name: Extract libgmp
-        run: 7z x libgmp-5.0.1-1-mingw32-dll-10.tar.lzma -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
+        run: 7z x glibgmp-5.0.1-1-mingw32-dll-10.tar.lzma -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
       - name: Delete libgmp archive
-        run: del libgmp-5.0.1-1-mingw32-dll-10.tar.lzma
+        run: del glibgmp-5.0.1-1-mingw32-dll-10.tar.lzma
         shell: cmd
         
         

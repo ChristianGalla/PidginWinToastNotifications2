@@ -517,7 +517,7 @@ jobs:
         shell: cmd
         
       - name: List pidgin-dev/win32-dev/mingw-4.7.2 dir
-        run: dir win32-dev/mingw-4.7.2
+        run: dir "win32-dev/mingw-4.7.2"
         shell: cmd
       
       - name: List pidgin-dev/pidgin-2.x.y dir

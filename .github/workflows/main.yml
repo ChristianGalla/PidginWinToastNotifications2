@@ -22,6 +22,14 @@ jobs:
       
     - name: Checkout PidginWinToastNotifications
       uses: actions/checkout@v2
+    
+    - uses: actions/cache@v2
+      name: Restore NuGet cache
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
  
     - name: Restore NuGet packages
       run: nuget restore PidginWinToastLib.sln
@@ -56,279 +64,357 @@ jobs:
         shell: cmd
       
       
+      # Checkout Plugin
+      
+      - name: Checkout PidginWinToastNotifications
+        uses: actions/checkout@v2
+        with:
+          path: PidginWinToastNotifications
+      
+      
       # Install Comnpiler dependencies
+    
+      - uses: actions/cache@v2
+        name: Restore mingw folder
+        id: cache-mingw
+        with:
+          path: win32-dev/mingw-4.7.2
+          key: ${{ runner.os }}-mingw
       
       - name: Download binutils
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         # binutils-2.23.1-1-mingw32-bin.tar.lzma is not available anymore. Download the nearest version.
         run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/binutils/binutils-2.24/binutils-2.24-1-mingw32-bin.tar.xz/download --output binutils-2.24-1-mingw32-bin.tar.xz
         shell: cmd
       
       - name: Extract binutils
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         # it looks like tar for Windows doesn't support xz, so use 7z instead
         run: 7z x binutils-2.24-1-mingw32-bin.tar.xz -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
       - name: Delete binutils archive
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: del binutils-2.24-1-mingw32-bin.tar.xz
         shell: cmd
         
         
       - name: Download gcc-core
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/gcc/Version4/gcc-4.7.2-1/gcc-core-4.7.2-1-mingw32-bin.tar.lzma/download --output gcc-core-4.7.2-1-mingw32-bin.tar.lzma
         shell: cmd
       
       - name: Extract gcc-core
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: 7z x gcc-core-4.7.2-1-mingw32-bin.tar.lzma -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
       - name: Delete gcc-core archive
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: del gcc-core-4.7.2-1-mingw32-bin.tar.lzma
         shell: cmd    
       
         
       - name: Download gcc source
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/gcc/Version4/gcc-4.7.2-1/gcc-4.7.2-1-mingw32-src.tar.lzma/download --output gcc-4.7.2-1-mingw32-src.tar.lzma
         shell: cmd
       
       - name: Extract gcc source
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: 7z x gcc-4.7.2-1-mingw32-src.tar.lzma -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
       - name: Delete gcc source archive
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: del gcc-4.7.2-1-mingw32-src.tar.lzma
         shell: cmd    
       
         
       - name: Download libgcc
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/gcc/Version4/gcc-4.7.2-1/libgcc-4.7.2-1-mingw32-dll-1.tar.lzma/download --output libgcc-4.7.2-1-mingw32-dll-1.tar.lzma
         shell: cmd
       
       - name: Extract libgcc
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: 7z x libgcc-4.7.2-1-mingw32-dll-1.tar.lzma -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
       - name: Delete libgcc archive
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: del libgcc-4.7.2-1-mingw32-dll-1.tar.lzma
         shell: cmd
         
         
       - name: Download libgomp
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/gcc/Version4/gcc-4.7.2-1/libgomp-4.7.2-1-mingw32-dll-1.tar.lzma/download --output libgomp-4.7.2-1-mingw32-dll-1.tar.lzma
         shell: cmd
       
       - name: Extract libgomp
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: 7z x libgomp-4.7.2-1-mingw32-dll-1.tar.lzma -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
       - name: Delete libgomp archive
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: del libgomp-4.7.2-1-mingw32-dll-1.tar.lzma
         shell: cmd
         
         
       - name: Download libquadmath
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/gcc/Version4/gcc-4.7.2-1/libquadmath-4.7.2-1-mingw32-dll-0.tar.lzma/download --output libquadmath-4.7.2-1-mingw32-dll-0.tar.lzma
         shell: cmd
       
       - name: Extract libquadmath
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: 7z x libquadmath-4.7.2-1-mingw32-dll-0.tar.lzma -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
       - name: Delete libquadmath archive
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: del libquadmath-4.7.2-1-mingw32-dll-0.tar.lzma
         shell: cmd
         
         
       - name: Download libssp
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/gcc/Version4/gcc-4.7.2-1/libssp-4.7.2-1-mingw32-dll-0.tar.lzma/download --output libssp-4.7.2-1-mingw32-dll-0.tar.lzma
         shell: cmd
       
       - name: Extract libssp
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: 7z x libssp-4.7.2-1-mingw32-dll-0.tar.lzma -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
       - name: Delete libssp archive
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: del libssp-4.7.2-1-mingw32-dll-0.tar.lzma
         shell: cmd
       
         
       - name: Download gettext
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/gettext/gettext-0.18.1.1-2/libintl-0.18.1.1-2-mingw32-dll-8.tar.lzma/download --output libintl-0.18.1.1-2-mingw32-dll-8.tar.lzma
         shell: cmd
       
       - name: Extract gettext
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: 7z x libintl-0.18.1.1-2-mingw32-dll-8.tar.lzma -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
       - name: Delete gettext archive
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: del libintl-0.18.1.1-2-mingw32-dll-8.tar.lzma
         shell: cmd
         
         
       - name: Download gmp
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/gmp/gmp-5.0.1-1/gmp-5.0.1-1-mingw32-dev.tar.lzma/download --output gmp-5.0.1-1-mingw32-dev.tar.lzma
         shell: cmd
       
       - name: Extract gmp
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: 7z x gmp-5.0.1-1-mingw32-dev.tar.lzma -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
       - name: Delete gmp archive
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: del gmp-5.0.1-1-mingw32-dev.tar.lzma
         shell: cmd
         
         
       - name: Download libgmp
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/gmp/gmp-5.0.1-1/libgmp-5.0.1-1-mingw32-dll-10.tar.lzma/download --output glibgmp-5.0.1-1-mingw32-dll-10.tar.lzma
         shell: cmd
       
       - name: Extract libgmp
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: 7z x glibgmp-5.0.1-1-mingw32-dll-10.tar.lzma -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
       - name: Delete libgmp archive
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: del glibgmp-5.0.1-1-mingw32-dll-10.tar.lzma
         shell: cmd
         
         
       - name: Download libiconv dev
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/libiconv/libiconv-1.14-2/libiconv-1.14-2-mingw32-dev.tar.lzma/download --output libiconv-1.14-2-mingw32-dev.tar.lzma
         shell: cmd
       
       - name: Extract libiconv dev
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: 7z x libiconv-1.14-2-mingw32-dev.tar.lzma -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
       - name: Delete libiconv dev archive
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: del libiconv-1.14-2-mingw32-dev.tar.lzma
         shell: cmd
         
         
       - name: Download libiconv dll
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/libiconv/libiconv-1.14-2/libiconv-1.14-2-mingw32-dll-2.tar.lzma/download --output libiconv-1.14-2-mingw32-dll-2.tar.lzma
         shell: cmd
       
       - name: Extract libiconv dll
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: 7z x libiconv-1.14-2-mingw32-dll-2.tar.lzma -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
       - name: Delete libiconv dll archive
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: del libiconv-1.14-2-mingw32-dll-2.tar.lzma
         shell: cmd
         
         
       - name: Download mingwrt dev
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/mingwrt/mingwrt-3.20/mingwrt-3.20-2-mingw32-dev.tar.lzma/download --output mingwrt-3.20-2-mingw32-dev.tar.lzma
         shell: cmd
       
       - name: Extract mingwrt dev
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: 7z x mingwrt-3.20-2-mingw32-dev.tar.lzma -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
       - name: Delete mingwrt dev archive
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: del mingwrt-3.20-2-mingw32-dev.tar.lzma
         shell: cmd
         
         
       - name: Download mingwrt dll
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/mingwrt/mingwrt-3.20/mingwrt-3.20-2-mingw32-dll.tar.lzma/download --output mingwrt-3.20-2-mingw32-dll.tar.lzma
         shell: cmd
       
       - name: Extract mingwrt dll
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: 7z x mingwrt-3.20-2-mingw32-dll.tar.lzma -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
       - name: Delete mingwrt dll archive
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: del mingwrt-3.20-2-mingw32-dll.tar.lzma
         shell: cmd
         
         
       - name: Download mpc dll
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/mpc/mpc-0.8.1-1/libmpc-0.8.1-1-mingw32-dll-2.tar.lzma/download --output libmpc-0.8.1-1-mingw32-dll-2.tar.lzma
         shell: cmd
       
       - name: Extract mpc dll
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: 7z x libmpc-0.8.1-1-mingw32-dll-2.tar.lzma -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
       - name: Delete mpc dll archive
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: del libmpc-0.8.1-1-mingw32-dll-2.tar.lzma
         shell: cmd
         
         
       - name: Download mpc dev
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/mpc/mpc-0.8.1-1/mpc-0.8.1-1-mingw32-dev.tar.lzma/download --output mpc-0.8.1-1-mingw32-dev.tar.lzma
         shell: cmd
       
       - name: Extract mpc dev
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: 7z x mpc-0.8.1-1-mingw32-dev.tar.lzma -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
       - name: Delete mpc dev archive
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: del mpc-0.8.1-1-mingw32-dev.tar.lzma
         shell: cmd
         
         
       - name: Download mpfr dll
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/mpfr/mpfr-2.4.1-1/libmpfr-2.4.1-1-mingw32-dll-1.tar.lzma/download --output libmpfr-2.4.1-1-mingw32-dll-1.tar.lzma
         shell: cmd
       
       - name: Extract mpfr dll
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: 7z x libmpfr-2.4.1-1-mingw32-dll-1.tar.lzma -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
       - name: Delete mpfr dll archive
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: del libmpfr-2.4.1-1-mingw32-dll-1.tar.lzma
         shell: cmd
         
         
       - name: Download mpfr dev
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/mpfr/mpfr-2.4.1-1/mpfr-2.4.1-1-mingw32-dev.tar.lzma/download --output mpfr-2.4.1-1-mingw32-dev.tar.lzma
         shell: cmd
       
       - name: Extract mpfr dev
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: 7z x mpfr-2.4.1-1-mingw32-dev.tar.lzma -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
       - name: Delete mpfr dev archive
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: del mpfr-2.4.1-1-mingw32-dev.tar.lzma
         shell: cmd
         
         
       - name: Download w32api
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/w32api/w32api-3.17/w32api-3.17-2-mingw32-dev.tar.lzma/download --output w32api-3.17-2-mingw32-dev.tar.lzma
         shell: cmd
       
       - name: Extract w32api
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: 7z x w32api-3.17-2-mingw32-dev.tar.lzma -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
       - name: Delete w32api archive
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: del w32api-3.17-2-mingw32-dev.tar.lzma
         shell: cmd
         
         
       - name: Download libpthreadgc dll
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/pthreads-w32/pthreads-w32-2.9.0-pre-20110507-2/libpthreadgc-2.9.0-mingw32-pre-20110507-2-dll-2.tar.lzma/download --output libpthreadgc-2.9.0-mingw32-pre-20110507-2-dll-2.tar.lzma
         shell: cmd
       
       - name: Extract libpthreadgc dll
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: 7z x libpthreadgc-2.9.0-mingw32-pre-20110507-2-dll-2.tar.lzma -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
       - name: Delete libpthreadgc dll archive
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: del libpthreadgc-2.9.0-mingw32-pre-20110507-2-dll-2.tar.lzma
         shell: cmd
         
         
       - name: Download pthreads dev
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: curl -L https://sourceforge.net/projects/mingw/files/MinGW/Base/pthreads-w32/pthreads-w32-2.9.0-pre-20110507-2/pthreads-w32-2.9.0-mingw32-pre-20110507-2-dev.tar.lzma/download --output pthreads-w32-2.9.0-mingw32-pre-20110507-2-dev.tar.lzma
         shell: cmd
       
       - name: Extract pthreads dev
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: 7z x pthreads-w32-2.9.0-mingw32-pre-20110507-2-dev.tar.lzma -so | 7z x -aoa -si -ttar -owin32-dev\mingw-4.7.2
         shell: cmd
         
       - name: Delete pthreads dev archive
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
         run: del pthreads-w32-2.9.0-mingw32-pre-20110507-2-dev.tar.lzma
         shell: cmd
         
@@ -337,147 +423,250 @@ jobs:
         run: dir win32-dev\mingw-4.7.2
         shell: cmd        
       
+      
       # Installing Build dependencies
+    
+      - uses: actions/cache@v2
+        name: Restore gtk folder
+        id: cache-gtk
+        with:
+          path: win32-dev/gtk_2_0-2.14
+          key: ${{ runner.os }}-gtk
       
       - name: Download GTK archive
+        if: steps.cache-gtk.outputs.cache-hit != 'true'
         run: curl -L https://ftp.gnome.org/pub/gnome/binaries/win32/gtk+/2.14/gtk+-bundle_2.14.7-20090119_win32.zip --output gtk.zip
         shell: cmd
       
       - name: Extract GTK 
+        if: steps.cache-gtk.outputs.cache-hit != 'true'
         run: 7z x gtk.zip -owin32-dev/gtk_2_0-2.14
         shell: cmd
       
       - name: Delete GTK archive
+        if: steps.cache-gtk.outputs.cache-hit != 'true'
         run: del gtk.zip
         shell: cmd
       
+    
+      - uses: actions/cache@v2
+        name: Restore gettext folder
+        id: cache-gettext
+        with:
+          path: win32-dev/gettext-0.17
+          key: ${{ runner.os }}-gettext
       
       - name: Download gettext tools archive
+        if: steps.cache-gettext.outputs.cache-hit != 'true'
         run: curl -L https://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/gettext-tools-0.17.zip --output gettext-tools-0.17.zip
         shell: cmd
       
       - name: Extract gettext tools
+        if: steps.cache-gettext.outputs.cache-hit != 'true'
         run: 7z x gettext-tools-0.17.zip -owin32-dev/gettext-0.17
         shell: cmd
       
       - name: Delete gettext tools archive
+        if: steps.cache-gettext.outputs.cache-hit != 'true'
         run: del gettext-tools-0.17.zip
         shell: cmd
-      
-      
+            
       - name: Download gettext runtime
+        if: steps.cache-gettext.outputs.cache-hit != 'true'
         run: curl -L https://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/gettext-runtime-0.17-1.zip --output gettext-runtime-0.17-1.zip
         shell: cmd
       
       - name: Extract gettext runtime
+        if: steps.cache-gettext.outputs.cache-hit != 'true'
         run: 7z x gettext-runtime-0.17-1.zip -owin32-dev/gettext-0.17
         shell: cmd
       
       - name: Delete gettext tools runtime archive
+        if: steps.cache-gettext.outputs.cache-hit != 'true'
         run: del gettext-runtime-0.17-1.zip
         shell: cmd        
             
+    
+      - uses: actions/cache@v2
+        name: Restore gtkspell folder
+        id: cache-gtkspell
+        with:
+          path: win32-dev/gtkspell-2.0.16
+          key: ${{ runner.os }}-gtkspell
       
       - name: Download GtkSpell
+        if: steps.cache-gtkspell.outputs.cache-hit != 'true'
         run: curl -L https://data.imfreedom.org/pidgin/win32/gtkspell-2.0.16.tar.bz2 --output gtkspell-2.0.16.tar.bz2
         shell: cmd
       
       - name: Extract GtkSpell
+        if: steps.cache-gtkspell.outputs.cache-hit != 'true'
         run: tar -xf gtkspell-2.0.16.tar.bz2 -C win32-dev
         shell: cmd
       
       - name: Delete GtkSpell archive
+        if: steps.cache-gtkspell.outputs.cache-hit != 'true'
         run: del gtkspell-2.0.16.tar.bz2
         shell: cmd    
             
+            
+      - uses: actions/cache@v2
+        name: Restore enchant folder
+        id: cache-enchant
+        with:
+          path: win32-dev/enchant_1.6.0_win32
+          key: ${{ runner.os }}-enchant
       
       - name: Download Enchant
+        if: steps.cache-enchant.outputs.cache-hit != 'true'
         run: curl -L https://data.imfreedom.org/pidgin/win32/enchant_1.6.0_win32.zip --output enchant_1.6.0_win32.zip
         shell: cmd
       
       - name: Extract Enchant
+        if: steps.cache-enchant.outputs.cache-hit != 'true'
         run: 7z x enchant_1.6.0_win32.zip -owin32-dev
         shell: cmd
       
       - name: Delete Enchant archive
+        if: steps.cache-enchant.outputs.cache-hit != 'true'
         run: del enchant_1.6.0_win32.zip
         shell: cmd  
             
+            
+      - uses: actions/cache@v2
+        name: Restore nss folder
+        id: cache-nss
+        with:
+          path: win32-dev/nss-3.24-nspr-4.12
+          key: ${{ runner.os }}-nss
       
       - name: Download Mozilla NSS
+        if: steps.cache-nss.outputs.cache-hit != 'true'
         run: curl -L https://data.imfreedom.org/pidgin/win32/nss-3.24-nspr-4.12.tar.gz --output nss-3.24-nspr-4.12.tar.gz
         shell: cmd
       
       - name: Extract Mozilla NSS
+        if: steps.cache-nss.outputs.cache-hit != 'true'
         run: tar -xf nss-3.24-nspr-4.12.tar.gz -C win32-dev
         shell: cmd
       
       - name: Delete Mozilla NSS archive
+        if: steps.cache-nss.outputs.cache-hit != 'true'
         run: del nss-3.24-nspr-4.12.tar.gz
         shell: cmd  
       
+            
+      - uses: actions/cache@v2
+        name: Restore silc folder
+        id: cache-silc
+        with:
+          path: win32-dev/silc-toolkit-1.1.12
+          key: ${{ runner.os }}-silc
       
       - name: Download SILC Toolkit
+        if: steps.cache-silc.outputs.cache-hit != 'true'
         run: curl -L https://data.imfreedom.org/pidgin/win32/silc-toolkit-1.1.12.tar.gz --output silc-toolkit-1.1.12.tar.gz
         shell: cmd
       
       - name: Extract SILC Toolkit
+        if: steps.cache-silc.outputs.cache-hit != 'true'
         run: tar -xf silc-toolkit-1.1.12.tar.gz -C win32-dev
         shell: cmd
       
       - name: Delete SILC Toolkit archive
+        if: steps.cache-silc.outputs.cache-hit != 'true'
         run: del silc-toolkit-1.1.12.tar.gz
         shell: cmd                       
        
       
+      - uses: actions/cache@v2
+        name: Restore meanwhile folder
+        id: cache-meanwhile
+        with:
+          path: win32-dev/meanwhile-1.0.2_daa3
+          key: ${{ runner.os }}-meanwhile
+      
       - name: Download Meanwhile
+        if: steps.cache-meanwhile.outputs.cache-hit != 'true'
         run: curl -L https://data.imfreedom.org/pidgin/win32/meanwhile-1.0.2_daa3-win32.zip --output meanwhile-1.0.2_daa3-win32.zip
         shell: cmd
       
       - name: Extract Meanwhile
+        if: steps.cache-meanwhile.outputs.cache-hit != 'true'
         run: 7z x meanwhile-1.0.2_daa3-win32.zip -owin32-dev
         shell: cmd
       
       - name: Delete Meanwhile archive
+        if: steps.cache-meanwhile.outputs.cache-hit != 'true'
         run: del meanwhile-1.0.2_daa3-win32.zip
         shell: cmd  
        
       
+      - uses: actions/cache@v2
+        name: Restore cyrus folder
+        id: cache-cyrus
+        with:
+          path: win32-dev/cyrus-sasl-2.1.26_daa1
+          key: ${{ runner.os }}-cyrus
+      
       - name: Download Cyrus SASL
+        if: steps.cache-cyrus.outputs.cache-hit != 'true'
         run: curl -L https://data.imfreedom.org/pidgin/win32/cyrus-sasl-2.1.26_daa1.tar.gz --output cyrus-sasl-2.1.26_daa1.tar.gz
         shell: cmd
       
       - name: Extract Cyrus SASL
+        if: steps.cache-cyrus.outputs.cache-hit != 'true'
         run: tar -xf cyrus-sasl-2.1.26_daa1.tar.gz -C win32-dev
         shell: cmd
       
       - name: Delete Cyrus SASL archive
+        if: steps.cache-cyrus.outputs.cache-hit != 'true'
         run: del cyrus-sasl-2.1.26_daa1.tar.gz
         shell: cmd  
-       
+             
+      
+      - uses: actions/cache@v2
+        name: Restore intltool folder
+        id: cache-intltool
+        with:
+          path: win32-dev/intltool_0.40.4-1_win32
+          key: ${{ runner.os }}-intltool
       
       - name: Download Intltool
+        if: steps.cache-intltool.outputs.cache-hit != 'true'
         run: curl -L https://ftp.acc.umu.se/pub/GNOME/binaries/win32/intltool/0.40/intltool_0.40.4-1_win32.zip --output intltool_0.40.4-1_win32.zip
         shell: cmd
       
       - name: Extract Intltool
+        if: steps.cache-intltool.outputs.cache-hit != 'true'
         run: 7z x intltool_0.40.4-1_win32.zip -owin32-dev/intltool_0.40.4-1_win32
         shell: cmd
       
       - name: Delete Intltool archive
+        if: steps.cache-intltool.outputs.cache-hit != 'true'
         run: del intltool_0.40.4-1_win32.zip
         shell: cmd  
        
       
+      - uses: actions/cache@v2
+        name: Restore pidgin-inst-deps folder
+        id: cache-pidgin-inst-deps
+        with:
+          path: win32-dev/pidgin-inst-deps-20130214
+          key: ${{ runner.os }}-pidginInstDeps
+            
       - name: Download Crash Reporting Library
+        if: steps.cache-pidginInstDeps.outputs.cache-hit != 'true'
         run: curl -L https://data.imfreedom.org/pidgin/win32/pidgin-inst-deps-20130214.tar.gz --output pidgin-inst-deps-20130214.tar.gz
         shell: cmd
       
       - name: Extract Crash Reporting Library
+        if: steps.cache-pidginInstDeps.outputs.cache-hit != 'true'
         run: tar -xf pidgin-inst-deps-20130214.tar.gz -C win32-dev
         shell: cmd
       
       - name: Delete Crash Reporting Library archive
+        if: steps.cache-pidginInstDeps.outputs.cache-hit != 'true'
         run: del pidgin-inst-deps-20130214.tar.gz
         shell: cmd
       
@@ -494,25 +683,36 @@ jobs:
       
       # Prepare a libssp-src.tar.gz file containing the libssp sources and licenses
       
-      - name: Create libsspsrctmp folder
-        run: mkdir libsspsrctmp
-        shell: cmd
-        working-directory: "./win32-dev/mingw-4.7.2"
+      # - uses: actions/cache@v2
+      #  name: Restore libssp file
+      #  id: cache-libssp
+      #  with:
+      #    path: win32-dev/mingw-4.7.2/bin/libssp-src.tar.gz
+      #    key: ${{ runner.os }}-libssp
       
-      - name: Extract files for libssp-src
-        run: tar -C libsspsrctmp -xf gcc-4.7.2-1-mingw32-src/gcc-4.7.2.tar.bz2 gcc-4.7.2/COPYING3 gcc-4.7.2/COPYING.RUNTIME gcc-4.7.2/libssp --strip-components=1
-        shell: cmd
-        working-directory: "./win32-dev/mingw-4.7.2"
+      #- name: Create libsspsrctmp folder
+      #  if: steps.cache-libssp.outputs.cache-hit != 'true'
+      #  run: mkdir libsspsrctmp
+      #  shell: cmd
+      #  working-directory: "./win32-dev/mingw-4.7.2"
       
-      - name: Create libssp-src.tar.gz
-        run: tar -C libsspsrctmp -czf bin/libssp-src.tar.gz .
-        shell: cmd
-        working-directory: "./win32-dev/mingw-4.7.2"
+      # - name: Extract files for libssp-src
+      #  if: steps.cache-libssp.outputs.cache-hit != 'true'
+      #  run: tar -C libsspsrctmp -xf gcc-4.7.2-1-mingw32-src/gcc-4.7.2.tar.bz2 gcc-4.7.2/COPYING3 gcc-4.7.2/COPYING.RUNTIME gcc-4.7.2/libssp --strip-components=1
+      #  shell: cmd
+      #  working-directory: "./win32-dev/mingw-4.7.2"
       
-      - name: Delete libsspsrctmp folder
-        run: rm -r libsspsrctmp
-        shell: cmd
-        working-directory: "./win32-dev/mingw-4.7.2"
+      # - name: Create libssp-src.tar.gz
+      #  if: steps.cache-libssp.outputs.cache-hit != 'true'
+      #  run: tar -C libsspsrctmp -czf bin/libssp-src.tar.gz .
+      #  shell: cmd
+      #  working-directory: "./win32-dev/mingw-4.7.2"
+      
+      #- name: Delete libsspsrctmp folder
+      #  if: steps.cache-libssp.outputs.cache-hit != 'true'
+      #  run: rm -r libsspsrctmp
+      #  shell: cmd
+      #  working-directory: "./win32-dev/mingw-4.7.2"
       
       
       # TODO: set the MinGW gcc’s bin directory to be before Cygwin’s in bashrc
@@ -523,6 +723,13 @@ jobs:
               
       
       # Get Pidgin source code
+      
+      - uses: actions/cache@v2
+        name: Restore pidgin hg folder
+        id: cache-pidgin
+        with:
+          path: pidgin-2.x.y/.hg
+          key: ${{ runner.os }}-pidgin
       
       - name: Checkout Pidgin 2.12.0
         run: hg clone https://keep.imfreedom.org/pidgin/pidgin -r 0241f07ed2ba -b release-2.x.y -u v2.12.0 pidgin-2.x.y
@@ -550,16 +757,8 @@ jobs:
         
       # Build Pidgin
         
-      - name: Build Pidgin
-        run: make -f Makefile.mingw install
-        working-directory: ./pidgin-2.x.y
-
-      
-      # Checkout Plugin
-      
-      - name: Checkout PidginWinToastNotifications
-        uses: actions/checkout@v2
-        with:
-          path: PidginWinToastNotifications
+      # - name: Build Pidgin
+      #  run: make -f Makefile.mingw install
+      #  working-directory: ./pidgin-2.x.y
           
       # TODO: Build Plugin

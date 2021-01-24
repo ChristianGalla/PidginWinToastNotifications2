@@ -656,17 +656,17 @@ jobs:
           key: ${{ runner.os }}-pidginInstDeps
             
       - name: Download Crash Reporting Library
-        if: steps.cache-pidginInstDeps.outputs.cache-hit != 'true'
+        if: steps.cache-pidgin-inst-deps.outputs.cache-hit != 'true'
         run: curl -L https://data.imfreedom.org/pidgin/win32/pidgin-inst-deps-20130214.tar.gz --output pidgin-inst-deps-20130214.tar.gz
         shell: cmd
       
       - name: Extract Crash Reporting Library
-        if: steps.cache-pidginInstDeps.outputs.cache-hit != 'true'
+        if: steps.cache-pidgin-inst-deps.outputs.cache-hit != 'true'
         run: tar -xf pidgin-inst-deps-20130214.tar.gz -C win32-dev
         shell: cmd
       
       - name: Delete Crash Reporting Library archive
-        if: steps.cache-pidginInstDeps.outputs.cache-hit != 'true'
+        if: steps.cache-pidgin-inst-deps.outputs.cache-hit != 'true'
         run: del pidgin-inst-deps-20130214.tar.gz
         shell: cmd
       
@@ -683,36 +683,36 @@ jobs:
       
       # Prepare a libssp-src.tar.gz file containing the libssp sources and licenses
       
-      # - uses: actions/cache@v2
-      #  name: Restore libssp file
-      #  id: cache-libssp
-      #  with:
-      #    path: win32-dev/mingw-4.7.2/bin/libssp-src.tar.gz
-      #    key: ${{ runner.os }}-libssp
+      - uses: actions/cache@v2
+        name: Restore libssp file
+        id: cache-libssp
+        with:
+          path: win32-dev/mingw-4.7.2/bin/libssp-src.tar.gz
+          key: ${{ runner.os }}-libssp
       
-      #- name: Create libsspsrctmp folder
-      #  if: steps.cache-libssp.outputs.cache-hit != 'true'
-      #  run: mkdir libsspsrctmp
-      #  shell: cmd
-      #  working-directory: "./win32-dev/mingw-4.7.2"
+      - name: Create libsspsrctmp folder
+        if: steps.cache-libssp.outputs.cache-hit != 'true'
+        run: mkdir libsspsrctmp
+        shell: cmd
+        working-directory: "./win32-dev/mingw-4.7.2"
       
-      # - name: Extract files for libssp-src
-      #  if: steps.cache-libssp.outputs.cache-hit != 'true'
-      #  run: tar -C libsspsrctmp -xf gcc-4.7.2-1-mingw32-src/gcc-4.7.2.tar.bz2 gcc-4.7.2/COPYING3 gcc-4.7.2/COPYING.RUNTIME gcc-4.7.2/libssp --strip-components=1
-      #  shell: cmd
-      #  working-directory: "./win32-dev/mingw-4.7.2"
+      - name: Extract files for libssp-src
+        if: steps.cache-libssp.outputs.cache-hit != 'true'
+        run: tar -C libsspsrctmp -xf gcc-4.7.2-1-mingw32-src/gcc-4.7.2.tar.bz2 gcc-4.7.2/COPYING3 gcc-4.7.2/COPYING.RUNTIME gcc-4.7.2/libssp --strip-components=1
+        shell: cmd
+        working-directory: "./win32-dev/mingw-4.7.2"
       
-      # - name: Create libssp-src.tar.gz
-      #  if: steps.cache-libssp.outputs.cache-hit != 'true'
-      #  run: tar -C libsspsrctmp -czf bin/libssp-src.tar.gz .
-      #  shell: cmd
-      #  working-directory: "./win32-dev/mingw-4.7.2"
+      - name: Create libssp-src.tar.gz
+        if: steps.cache-libssp.outputs.cache-hit != 'true'
+        run: tar -C libsspsrctmp -czf bin/libssp-src.tar.gz .
+        shell: cmd
+        working-directory: "./win32-dev/mingw-4.7.2"
       
-      # - name: Delete libsspsrctmp folder
-      #  if: steps.cache-libssp.outputs.cache-hit != 'true'
-      #  run: rm -r libsspsrctmp
-      #  shell: cmd
-      #  working-directory: "./win32-dev/mingw-4.7.2"
+      - name: Delete libsspsrctmp folder
+        if: steps.cache-libssp.outputs.cache-hit != 'true'
+        run: rm -r libsspsrctmp
+        shell: cmd
+        working-directory: "./win32-dev/mingw-4.7.2"
       
       
       # TODO: set the MinGW gcc’s bin directory to be before Cygwin’s in bashrc
@@ -725,13 +725,14 @@ jobs:
       # Get Pidgin source code
       
       - uses: actions/cache@v2
-        name: Restore pidgin hg folder
+        name: Restore pidgin folder
         id: cache-pidgin
         with:
-          path: pidgin-2.x.y/.hg
-          key: ${{ runner.os }}-pidgin
+          path: pidgin-2.x.y
+          key: ${{ runner.os }}-pidgin-2
       
       - name: Checkout Pidgin 2.12.0
+        if: steps.cache-pidgin.outputs.cache-hit != 'true'
         run: hg clone https://keep.imfreedom.org/pidgin/pidgin -r 0241f07ed2ba -b release-2.x.y -u v2.12.0 pidgin-2.x.y
         shell: cmd
     

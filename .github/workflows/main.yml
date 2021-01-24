@@ -508,11 +508,23 @@ jobs:
       
       # Prepare a libssp-src.tar.gz file containing the libssp sources and licenses
       
-      - name: Preparing libssp-src.tar.gz
+      - name: Create libsspsrctmp folder
         run: mkdir libsspsrctmp
-          tar -C libsspsrctmp -xf gcc-4.7.2-1-mingw32-src/gcc-4.7.2.tar.bz2 gcc-4.7.2/COPYING3 gcc-4.7.2/COPYING.RUNTIME gcc-4.7.2/libssp --strip-components=1
-          tar -C libsspsrctmp -czf bin/libssp-src.tar.gz .
-          rm -r libsspsrctmp
+        shell: cmd
+        working-directory: "./win32-dev/mingw-4.7.2"
+      
+      - name: Extract files for libssp-src
+        run: tar -C libsspsrctmp -xf gcc-4.7.2-1-mingw32-src/gcc-4.7.2.tar.bz2 gcc-4.7.2/COPYING3 gcc-4.7.2/COPYING.RUNTIME gcc-4.7.2/libssp --strip-components=1
+        shell: cmd
+        working-directory: "./win32-dev/mingw-4.7.2"
+      
+      - name: Create libssp-src.tar.gz
+        run: tar -C libsspsrctmp -czf bin/libssp-src.tar.gz .
+        shell: cmd
+        working-directory: "./win32-dev/mingw-4.7.2"
+      
+      - name: Delete libsspsrctmp folder
+        run: rm -r libsspsrctmp
         shell: cmd
         working-directory: "./win32-dev/mingw-4.7.2"
       

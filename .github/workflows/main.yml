@@ -708,7 +708,7 @@ jobs:
       #  shell: cmd
       #  working-directory: "./win32-dev/mingw-4.7.2"
       
-      #- name: Delete libsspsrctmp folder
+      # - name: Delete libsspsrctmp folder
       #  if: steps.cache-libssp.outputs.cache-hit != 'true'
       #  run: rm -r libsspsrctmp
       #  shell: cmd

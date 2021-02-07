@@ -704,6 +704,12 @@ jobs:
         shell: cmd
         working-directory: "./win32-dev/mingw-4.7.2"
       
+      - name: dir extracted folder
+        if: steps.cache-libssp.outputs.cache-hit != 'true'
+        run: dir
+        shell: cmd
+        working-directory: "./win32-dev/mingw-4.7.2/libsspsrctmp/extracted"
+      
       - name: Create libssp-src.tar.gz
         if: steps.cache-libssp.outputs.cache-hit != 'true'
         run: tar -C gcc-4.7.2 -czf libssp-src.tar.gz .

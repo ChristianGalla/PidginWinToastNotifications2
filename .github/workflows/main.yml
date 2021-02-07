@@ -754,13 +754,14 @@ jobs:
         name: Restore pidgin folder
         id: cache-pidgin
         with:
-          path: pidgin-2.x.y
-          key: ${{ runner.os }}-pidgin-2
+          path: win32-dev/pidgin-2.x.y
+          key: ${{ runner.os }}-pidgin-3
       
       - name: Checkout Pidgin 2.12.0
         if: steps.cache-pidgin.outputs.cache-hit != 'true'
         run: hg clone https://keep.imfreedom.org/pidgin/pidgin -r 0241f07ed2ba -b release-2.x.y -u v2.12.0 pidgin-2.x.y
-        shell: cmd
+        shell: cmd      
+        working-directory: "./win32-dev"
     
     
       # List dirs for debug
@@ -789,3 +790,11 @@ jobs:
       #  working-directory: ./pidgin-2.x.y
           
       # TODO: Build Plugin
+
+
+      # Cleanup cache dirs
+      
+      - name: Prepare Pidgin dir for caching
+        run: hg revert --all --no-backup
+        shell: cmd
+        working-directory: "./win32-dev/pidgin-2.x.y"

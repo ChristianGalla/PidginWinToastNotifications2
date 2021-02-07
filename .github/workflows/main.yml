@@ -743,9 +743,11 @@ jobs:
       
       # TODO: set the MinGW gcc’s bin directory to be before Cygwin’s in bashrc
       
-      # - name: Current Path
-      #  run: dir "C:\cygwin\home\"
-      #  shell: cmd
+      - name: Current bashrc
+        run: cat ~/.bashrc
+      
+      # - name: Seting the MinGW gcc’s bin directory to be before Cygwin’s in bashrc
+      #   run: cat ~/.bashrc
               
       
       # Get Pidgin source code

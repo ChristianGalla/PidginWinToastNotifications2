@@ -730,9 +730,9 @@ jobs:
       
       - name: Move libssp-src.tar.gz to correct location
         if: steps.cache-libssp.outputs.cache-hit != 'true'
-        run: move /Y "libsspsrctmp/gcc-4.7.2/libssp-src.tar.gz" "bin"
+        run: move /Y "libssp-src.tar.gz" "../../bin"
         shell: cmd
-        working-directory: "./win32-dev/mingw-4.7.2"
+        working-directory: "./win32-dev/mingw-4.7.2/libsspsrctmp/gcc-4.7.2"
       
       - name: Delete libsspsrctmp folder
         if: steps.cache-libssp.outputs.cache-hit != 'true'
